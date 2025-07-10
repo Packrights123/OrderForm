@@ -1,6 +1,4 @@
 import streamlit as st
-import mysql.connector
-from mysql.connector import Error
 import pandas as pd
 from datetime import datetime
 import os
@@ -8,14 +6,6 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 
-# ------------------ DB Connection ------------------
-def create_connection():
-    return mysql.connector.connect(
-        host='localhost',
-        database='packrights',
-        user='root',
-        password='root123'
-    )
 
 # ------------------ UI ------------------
 st.set_page_config(page_title="Sales Order Form", layout="centered")
@@ -161,22 +151,7 @@ delivery_mode = st.text_input("Delivery Mode (e.g., Courier, Transport)")
 # ------------------ Submit Order ------------------
 if st.button("📤 Submit Order"):
     try:
-        connection = create_connection()
-        cursor = connection.cursor()
-
-        for product in products:
-            insert_query = """
-                INSERT INTO orders (
-                    salesperson_id, company_name, product_type, spec,
-                    quantity, rate, shipping_address, billing_address, delivery_mode
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            values = (
-                salesperson_id, company, product["Product Type"], product["Specs"],
-                product["Quantity"], product["Rate"], shipping_address, billing_address, delivery_mode
-            )
-            cursor.execute(insert_query, values)
-        connection.commit()
+        
 
         # Save to Excel
         excel_file = "order_data.xlsx"
@@ -225,16 +200,15 @@ if st.button("📤 Submit Order"):
                 delivery_mode
             ])
 
-        st.success("✅ All products submitted and saved to Excel, MySQL, and Google Sheets successfully!")
+        st.success("✅ All products submitted and saved to Excel and Google Sheets successfully!")
+
 
         with open(excel_file, "rb") as f:
             st.download_button("📥 Download Excel", f, file_name="order_data.xlsx")
 
-
-    except Error as e:
+    except Exception as e:
         st.error(f"❌ Error: {e}")
 
-    finally:
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
+
+
+   
