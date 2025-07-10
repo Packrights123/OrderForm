@@ -3,13 +3,10 @@ import pandas as pd
 from datetime import datetime
 import os
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+import json
+# <<< CHANGE START: These imports are new or updated. The old oauth2client is removed.
 from google.oauth2.service_account import Credentials
-
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = Credentials.from_service_account_info(st.secrets["gcp_service_account"], scopes=scope)
-client = gspread.authorize(creds)
-
+# <<< CHANGE END
 
 
 # ------------------ UI ------------------
@@ -156,9 +153,31 @@ delivery_mode = st.text_input("Delivery Mode (e.g., Courier, Transport)")
 # ------------------ Submit Order ------------------
 if st.button("📤 Submit Order"):
     try:
-        
+        # <<< CHANGE START: This entire block is new. It replaces your old connection code.
+        # This code connects to Google Sheets using the secrets you configured.
+        scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis.com/auth/drive"]
 
-        # Save to Excel
+        # Check for secrets in Streamlit Cloud deployment
+        if "gcp_service_account" in st.secrets:
+            creds_json = st.secrets["gcp_service_account"]
+        # Check for secrets in GitHub Actions deployment
+        elif "GCP_CREDENTIALS" in os.environ:
+            creds_json_str = os.environ["GCP_CREDENTIALS"]
+            creds_json = json.loads(creds_json_str)
+        # Fallback for local development
+        else:
+            try:
+                # Use a specific filename for clarity
+                creds_json = "google_service_account.json"
+            except FileNotFoundError:
+                st.error("Credentials file not found and secrets are not available.")
+                st.stop()
+
+        creds = Credentials.from_service_account_info(creds_json, scopes=scopes)
+        client = gspread.authorize(creds)
+        # <<< CHANGE END
+
+        # Save to Excel (Your original code is good)
         excel_file = "order_data.xlsx"
         rows = []
         for product in products:
@@ -182,13 +201,10 @@ if st.button("📤 Submit Order"):
         else:
             df_new = pd.DataFrame(rows)
 
-        df_new.to_excel(excel_file, index=False)       
+        df_new.to_excel(excel_file, index=False)
 
         # ✅ Save to Google Sheets
-        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
-        client = gspread.authorize(creds)
-
+        # The OLD connection code that was here has been REMOVED and REPLACED above.
         sheet = client.open("ORDER FORM").sheet1  # Change to your Google Sheet name
         for product in products:
             sheet.append_row([
@@ -207,13 +223,11 @@ if st.button("📤 Submit Order"):
 
         st.success("✅ All products submitted and saved to Excel and Google Sheets successfully!")
 
-
         with open(excel_file, "rb") as f:
             st.download_button("📥 Download Excel", f, file_name="order_data.xlsx")
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
-
 
 
    
