@@ -1,4 +1,6 @@
 streamlit
-pandas
 mysql-connector-python
+pandas
+gspread
+oauth2client
 openpyxl
