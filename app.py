@@ -152,28 +152,20 @@ delivery_mode = st.text_input("Delivery Mode (e.g., Courier, Transport)")
 
 # ------------------ Submit Order ------------------
 if st.button("📤 Submit Order"):
+    # --- This entire block should replace the old one inside your st.button ---
     try:
-        # <<< CHANGE START: This entire block is new. It replaces your old connection code.
-        # This code connects to Google Sheets using the secrets you configured.
+        # <<< CHANGE START
         scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis.com/auth/drive"]
 
-        # Check for secrets in Streamlit Cloud deployment
+        # This logic correctly handles deployed and local environments
         if "gcp_service_account" in st.secrets:
+            # Use credentials from st.secrets (for Streamlit Cloud)
             creds_json = st.secrets["gcp_service_account"]
-        # Check for secrets in GitHub Actions deployment
-        elif "GCP_CREDENTIALS" in os.environ:
-            creds_json_str = os.environ["GCP_CREDENTIALS"]
-            creds_json = json.loads(creds_json_str)
-        # Fallback for local development
+            creds = Credentials.from_service_account_info(creds_json, scopes=scopes)
         else:
-            try:
-                # Use a specific filename for clarity
-                creds_json = "google_service_account.json"
-            except FileNotFoundError:
-                st.error("Credentials file not found and secrets are not available.")
-                st.stop()
+            # Use credentials from the local JSON file
+            creds = Credentials.from_service_account_file("google_service_account.json", scopes=scopes)
 
-        creds = Credentials.from_service_account_info(creds_json, scopes=scopes)
         client = gspread.authorize(creds)
         # <<< CHANGE END
 
@@ -204,8 +196,7 @@ if st.button("📤 Submit Order"):
         df_new.to_excel(excel_file, index=False)
 
         # ✅ Save to Google Sheets
-        # The OLD connection code that was here has been REMOVED and REPLACED above.
-        sheet = client.open("ORDER FORM").sheet1  # Change to your Google Sheet name
+        sheet = client.open("ORDER FORM").sheet1
         for product in products:
             sheet.append_row([
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -228,6 +219,3 @@ if st.button("📤 Submit Order"):
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
-
-
-   
