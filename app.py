@@ -72,63 +72,63 @@ for i in range(num_products):
     elif product_type == "3SS Pouch":
          col1,col2 = st.columns(2)
          with col1:
-             filmtype = st.selectbox("Thickness", ["12metpet", "18 Matte BOPP"])
+             filmtype = st.selectbox("Thickness", ["12metpet", "18 Matte BOPP"], key=f"film_{i}")
          with col2:
-             barrier_layer = st.selectbox("Barrier Layer",["60LD Matte Lamination", "12Metpet 90Poly"])
+             barrier_layer = st.selectbox("Barrier Layer",["60LD Matte Lamination", "12Metpet 90Poly"], key=f"barrier_{i}")
          specs = f"{filmtype}+{barrier_layer}"
 
     elif product_type == "Pouches":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet","18 BOPP"])
+            film_type=st.selectbox("Thickness",["12 Pet","18 BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"])
+            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
-            inner_layer=st.selectbox("Inner Layer",["90 Poly","60 LD","80 LD","100 LD"])
+            inner_layer=st.selectbox("Inner Layer",["90 Poly","60 LD","80 LD","100 LD"], key=f"inner_{i}")
         with col4:
-            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""])
+            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
     
     elif product_type == "Neck Shrink":
         col1, = st.columns(1)
         with col1:
-            thickness=st.selectbox("Thickness",["40 Micron","50 Micron"])
+            thickness=st.selectbox("Thickness",["40 Micron","50 Micron"], key=f"thickness_{i}")
         specs= f"{thickness}"
 
     elif product_type == "Body Shrink":
         col1, = st.columns(1)
         with col1:
-            thickness=st.selectbox("Thickness",["40 Micron","50 Micron"])
+            thickness=st.selectbox("Thickness",["40 Micron","50 Micron"], key=f"thickness_{i}")
         specs= f"{thickness}"
 
     elif product_type == "Sachet":
         col1, = st.columns(1)
         with col1:
-            material_type=st.selectbox("Material Type",["18 BOPP / 9 ALU / 50 LD"])
+            material_type=st.selectbox("Material Type",["18 BOPP / 9 ALU / 50 LD"], key=f"material_{i}")
         specs=f"{material_type}"
     
     elif product_type == "3D Pouch":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet","18 BOPP"])
+            film_type=st.selectbox("Thickness",["12 Pet","18 BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"])
+            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
-            inner_layer=st.selectbox("Inner Layer",["90 Poly","60 LD","80 LD","100 LD"])
+            inner_layer=st.selectbox("Inner Layer",["90 Poly","60 LD","80 LD","100 LD"], key=f"inner_{i}")
         with col4:
-            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""])
+            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
 
     elif product_type=="Standup Pouch":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet", "18 Matt BOPP"])
+            film_type=st.selectbox("Thickness",["12 Pet", "18 Matt BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer", ["12 Metpet"])
+            barrier_layer=st.selectbox("Barrier Layer", ["12 Metpet"], key=f"barrier_{i}")
         with col3:
-            inner_layer=st.selectbox("Inner Layer", ["100 LD"])
+            inner_layer=st.selectbox("Inner Layer", ["100 LD"], key=f"inner_{i}")
         with col4:
-            finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish",""])
+            finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs=f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
 
     else:
@@ -152,20 +152,28 @@ delivery_mode = st.text_input("Delivery Mode (e.g., Courier, Transport)")
 
 # ------------------ Submit Order ------------------
 if st.button("📤 Submit Order"):
-    # --- This entire block should replace the old one inside your st.button ---
     try:
-        # <<< CHANGE START
+        # <<< CHANGE START: This entire block is new. It replaces your old connection code.
+        # This code connects to Google Sheets using the secrets you configured.
         scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis.com/auth/drive"]
 
-        # This logic correctly handles deployed and local environments
+        # Check for secrets in Streamlit Cloud deployment
         if "gcp_service_account" in st.secrets:
-            # Use credentials from st.secrets (for Streamlit Cloud)
             creds_json = st.secrets["gcp_service_account"]
-            creds = Credentials.from_service_account_info(creds_json, scopes=scopes)
+        # Check for secrets in GitHub Actions deployment
+        elif "GCP_CREDENTIALS" in os.environ:
+            creds_json_str = os.environ["GCP_CREDENTIALS"]
+            creds_json = json.loads(creds_json_str)
+        # Fallback for local development
         else:
-            # Use credentials from the local JSON file
-            creds = Credentials.from_service_account_file("google_service_account.json", scopes=scopes)
+            try:
+                # Use a specific filename for clarity
+                creds_json = "google_service_account.json"
+            except FileNotFoundError:
+                st.error("Credentials file not found and secrets are not available.")
+                st.stop()
 
+        creds = Credentials.from_service_account_info(creds_json, scopes=scopes)
         client = gspread.authorize(creds)
         # <<< CHANGE END
 
@@ -196,7 +204,8 @@ if st.button("📤 Submit Order"):
         df_new.to_excel(excel_file, index=False)
 
         # ✅ Save to Google Sheets
-        sheet = client.open("ORDER FORM").sheet1
+        # The OLD connection code that was here has been REMOVED and REPLACED above.
+        sheet = client.open("ORDER FORM").sheet1  # Change to your Google Sheet name
         for product in products:
             sheet.append_row([
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -219,3 +228,6 @@ if st.button("📤 Submit Order"):
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
+
+
+   
