@@ -45,8 +45,8 @@ for i in range(num_products):
     st.markdown(f"**Product {i+1}**")
 
     product_type = st.selectbox(f"Select Product Type {i+1}", [
-        "Labels", "Laminates", "3SS Pouch", "Pouches", "Neck Shrink",
-        "Body Shrink", "Sachet", "Standup Pouch", "3D Pouch"
+        "Labels", "Laminates", "3SS Pouch", "Neck Shrink",
+        "Body Shrink", "Sachet", "Standup Pouch", "3D Pouch", "Mono Cartone", "Composite Can"
     ], key=f"product_type_{i}")
 
     # Dynamic specs
@@ -76,18 +76,6 @@ for i in range(num_products):
          with col2:
              barrier_layer = st.selectbox("Barrier Layer",["60LD Matte Lamination", "12Metpet 90Poly"], key=f"barrier_{i}")
          specs = f"{filmtype}+{barrier_layer}"
-
-    elif product_type == "Pouches":
-        col1,col2,col3,col4=st.columns(4)
-        with col1:
-            film_type=st.selectbox("Thickness",["12 Pet","18 BOPP"], key=f"film_{i}")
-        with col2:
-            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
-        with col3:
-            inner_layer=st.selectbox("Inner Layer",["90 Poly","60 LD","80 LD","100 LD"], key=f"inner_{i}")
-        with col4:
-            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
-        specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
     
     elif product_type == "Neck Shrink":
         col1, = st.columns(1)
@@ -130,6 +118,26 @@ for i in range(num_products):
         with col4:
             finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs=f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
+    elif product_type=="Mono Cartone":
+        col1,col2,col3=st.columns(3)
+        with col1:
+            first_layer=st.selectbox("First Layer",["SBS 350", "SBS 300","330 FBB"], key=f"outer_{i}")
+        with col2:
+            second_layer=st.selectbox("Second Layer",["Matte Lamination", "Gloss Lamination"],key=f"second_{i}")
+        with col3:
+            third_layer=st.selectbox("Third Layer",["Emboissing", "Emboissing + SpotUV", "Emboissing + SpotUV + Dripoff","Emboissing + SpotUV + Dripoff + Foiling","" ],key=f"third_{i}")
+    
+    elif product_type=="Composite Can":
+        col1,col2,col3,col4 =st.columns(4)
+        with col1:
+            decoration=st.selectbox("Decoration",["Gloss Lamination", "Gloss lamination+ foiling ","Matte lamination","Matte lamination+ foiling", "Matte lamination + foiling + spotUV"],key=f"decoration_{i}")
+        with col2:
+            cap_type=st.selectbox("Cap Type",["Long Cap", "Short Cap"],key=f"cap_{i}")
+        with col3:
+            cushion_require=st.selectbox("Cushion Required",["Yes","No"],key=f"cushion_{i}")
+        with col4:
+            if cushion_require=="Yes":
+                cushioning_type=st.text_input("Enter cushioning type",key=f"cushioning_{i}")
 
     else:
         specs = st.text_input("Enter Specifications")
