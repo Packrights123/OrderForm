@@ -126,6 +126,7 @@ for i in range(num_products):
             second_layer=st.selectbox("Second Layer",["Matte Lamination", "Gloss Lamination"],key=f"second_{i}")
         with col3:
             third_layer=st.selectbox("Third Layer",["Emboissing", "Emboissing + SpotUV", "Emboissing + SpotUV + Dripoff","Emboissing + SpotUV + Dripoff + Foiling","" ],key=f"third_{i}")
+        spec=f"{first_layer} + {second_layer} + {third_layer}"
     
     elif product_type=="Composite Can":
         col1,col2,col3,col4 =st.columns(4)
@@ -135,9 +136,11 @@ for i in range(num_products):
             cap_type=st.selectbox("Cap Type",["Long Cap", "Short Cap"],key=f"cap_{i}")
         with col3:
             cushion_require=st.selectbox("Cushion Required",["Yes","No"],key=f"cushion_{i}")
+        cushioning_type=""
         with col4:
             if cushion_require=="Yes":
                 cushioning_type=st.text_input("Enter cushioning type",key=f"cushioning_{i}")
+        specs=f"{decoration} / {cap_type} / {cushioning_type}"
 
     else:
         specs = st.text_input("Enter Specifications")
@@ -185,31 +188,7 @@ if st.button("📤 Submit Order"):
         client = gspread.authorize(creds)
         # <<< CHANGE END
 
-        # Save to Excel (Your original code is good)
-        excel_file = "order_data.xlsx"
-        rows = []
-        for product in products:
-            rows.append({
-                "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "Salesperson": salesperson_name,
-                "Company": company,
-                "Product Type": product["Product Type"],
-                "Specs": product["Specs"],
-                "Product Description": product["Product Description"],
-                "Quantity": product["Quantity"],
-                "Rate": product["Rate"],
-                "Shipping Address": shipping_address,
-                "Billing Address": billing_address,
-                "Delivery Mode": delivery_mode
-            })
-
-        if os.path.exists(excel_file):
-            df_existing = pd.read_excel(excel_file)
-            df_new = pd.concat([df_existing, pd.DataFrame(rows)], ignore_index=True)
-        else:
-            df_new = pd.DataFrame(rows)
-
-        df_new.to_excel(excel_file, index=False)
+        
 
         # ✅ Save to Google Sheets
         # The OLD connection code that was here has been REMOVED and REPLACED above.
@@ -229,10 +208,9 @@ if st.button("📤 Submit Order"):
                 delivery_mode
             ])
 
-        st.success("✅ All products submitted and saved to Excel and Google Sheets successfully!")
+        st.success("✅ All products submitted and saved to Google Sheets successfully!")
 
-        with open(excel_file, "rb") as f:
-            st.download_button("📥 Download Excel", f, file_name="order_data.xlsx")
+
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
