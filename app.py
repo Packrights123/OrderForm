@@ -112,7 +112,7 @@ for i in range(num_products):
         with col4:
             finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs=f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
-    elif product_type=="Mono Cartone":
+    elif product_type=="Mono Carton":
         col1,col2,col3=st.columns(3)
         with col1:
             first_layer=st.selectbox("First Layer",["SBS 350", "SBS 300","330 FBB"], key=f"outer_{i}")
