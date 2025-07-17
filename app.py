@@ -46,7 +46,7 @@ for i in range(num_products):
 
     product_type = st.selectbox(f"Select Product Type {i+1}", [
         "Labels", "Laminates", "3SS Pouch", "Neck Shrink",
-        "Body Shrink", "Sachet", "Standup Pouch", "3D Pouch", "Mono Cartone", "Composite Can"
+        "Body Shrink",  "Standup Pouch", "3D Pouch", "Mono Carton", "Composite Can"
     ], key=f"product_type_{i}")
 
     # Dynamic specs
@@ -88,12 +88,6 @@ for i in range(num_products):
         with col1:
             thickness=st.selectbox("Thickness",["40 Micron","50 Micron"], key=f"thickness_{i}")
         specs= f"{thickness}"
-
-    elif product_type == "Sachet":
-        col1, = st.columns(1)
-        with col1:
-            material_type=st.selectbox("Material Type",["18 BOPP / 9 ALU / 50 LD"], key=f"material_{i}")
-        specs=f"{material_type}"
     
     elif product_type == "3D Pouch":
         col1,col2,col3,col4=st.columns(4)
