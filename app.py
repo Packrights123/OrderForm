@@ -64,19 +64,23 @@ for i in range(num_products):
         with col1:
             film_type = st.selectbox(f"Film Type {i+1}", ["12 BOPP", "18 Matte BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer = st.selectbox(f"Barrier {i+1}", ["9 ALU", "12 METPET", "12 PET"], key=f"barrier_{i}")
+            barrier_layer = st.selectbox(f"Barrier {i+1}", ["9 ALU", "12 METPET", "12 PET", "12 METPET/9 ALU","12 PET/9 ALU"], key=f"barrier_{i}")
         with col3:
-            inner_layer = st.selectbox(f"Inner Layer {i+1}", ["60 LD", "75 LD", "90 LD", "80 LD", "100 LD"], key=f"inner_{i}")
+            inner_layer = st.selectbox(f"Inner Layer {i+1}", ["50 LD","60 LD", "75 LD", "90 LD", "80 LD", "100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         specs = f"{film_type} + {barrier_layer} + {inner_layer}"
 
     elif product_type == "3SS Pouch":
-         col1,col2 = st.columns(2)
-         with col1:
-             filmtype = st.selectbox("Thickness", ["12metpet", "18 Matte BOPP"], key=f"film_{i}")
-         with col2:
-             barrier_layer = st.selectbox("Barrier Layer",["60LD Matte Lamination", "12Metpet 90Poly"], key=f"barrier_{i}")
-         specs = f"{filmtype}+{barrier_layer}"
-    
+        col1,col2,col3,col4=st.columns(4)
+        with col1:
+            film_type=st.selectbox("Thickness",["12 Pet","18 Matt BOPP"], key=f"film_{i}")
+        with col2:
+            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
+        with col3:
+            inner_layer=st.selectbox("Inner Layer",["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
+        with col4:
+            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
+        specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
+
     elif product_type == "Neck Shrink":
         col1, = st.columns(1)
         with col1:
@@ -92,11 +96,11 @@ for i in range(num_products):
     elif product_type == "3D Pouch":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet","18 BOPP"], key=f"film_{i}")
+            film_type=st.selectbox("Thickness",["12 Pet","18 Matt BOPP"], key=f"film_{i}")
         with col2:
             barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
-            inner_layer=st.selectbox("Inner Layer",["90 Poly","60 LD","80 LD","100 LD"], key=f"inner_{i}")
+            inner_layer=st.selectbox("Inner Layer",["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
             finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
@@ -106,9 +110,9 @@ for i in range(num_products):
         with col1:
             film_type=st.selectbox("Thickness",["12 Pet", "18 Matt BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer", ["12 Metpet"], key=f"barrier_{i}")
+            barrier_layer=st.selectbox("Barrier Layer", ["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
-            inner_layer=st.selectbox("Inner Layer", ["100 LD"], key=f"inner_{i}")
+            inner_layer=st.selectbox("Inner Layer", ["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
             finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
         specs=f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
