@@ -21,20 +21,126 @@ salesperson_id = salespeople[salesperson_name]
 
 # Company with "Other"
 company_list = sorted([
-    "3S Fitness", "AG organica", "Animal booster", "Angrish", "Anutrition", "Arscore", "Asthetic Pharma",
-    "BBI", "BIO Herbal", "Body Armore", "Body Armour", "Bluebin", "Bukalo", "Dabur", "Davisco", "Demotic",
-    "Denzour", "Dr. Morapen", "Duhi", "Easy Eat", "Enhance", "Enhanced Dubai", "Fabley Costamics",
-    "Fermentis", "Fit Red", "Fit treat", "GoodLuck", "GXN", "Hercules", "HFN", "Imagine Eyes", "Influx",
-    "Jovex", "Little Joy", "Mind & Body", "Monsterbolic", "Muscle Dominator", "Muscle venture", "My Fitness",
-    "N.g Electro", "Nectarine Pharmacy", "Nestor Pharma", "Nirvasa Healthcare Pvt. Ltd.", "Nutricore Bioscience",
-    "Nutriburst", "One Punch Nutrition", "OZN", "Owleaf", "Packrights", "PB", "Percos", "Pontika", "Pressage",
-    "PSN", "RME", "RMS", "Rebela", "Roxor", "Sacred beast", "Sapiens lab", "Sirona", "Snikki",
-    "Sprivil Healthcare", "STARK NUTRITION", "Super Muscle", "Tforma", "The Natural Wash", "Thrive on",
-    "Titon Biotech", "Trusan", "Trojan", "Trojan Pharma", "TrueNutrition", "TVC", "UP&RUN", "Vivoiz",
-    "WellBeing Nutrition", "White Wolf", "Wings Nutrition", "Zucchero"
+"3S FITNESS TECHNOLOGIES PRIVATE LIMITED (Hr)",
+"Acno Health",
+"Aggarwal Pharmaceuticals",
+"AG Organica Pvt. Ltd.",
+"AGUSTO FORMULATIONS PVT LTD",
+"AHPVITALS PRIVATE LIMITED",
+"AIREN HERBALS",
+"All Time Nutrition",
+"AMAARA AYURVEDA",
+"ANIHAC PHARMA",
+"ASEAR HEALTHCARE PVT LTD",
+"AUGUST ASSORTMENT PVT LTD",
+"AURA GLOBE ENTERPRISES",
+"AUREA BIOLABS PRIVATE LIMITED",
+"AVEDA AYUR LLP",
+"BALAJI CHEMICALS",
+"Bhd Sales",
+"Bili Life Science LLP",
+"Bluebein Nutrix Pvt. Ltd.",
+"BODY CORE SCIENCES",
+"B.S.Reddy & Co",
+"BUKALO INDIA PVT LTD",
+"BYBV NUTRA LLP",
+"CHABI ENTERPRISES PVT. LTD.",
+"Core Nutrition Pvt Ltd",
+"COST2COST NUTRACEUTICALS",
+"CREAMY FOODS LIMTED",
+"Daarvi Pharmaceuticals",
+"DESFOC SOLUTION PVT LTD",
+"DEV PRIYA INDUSTRIES PRIVATE LIMITED",
+"Deyga Organics",
+"DS ENTERPRISES",
+"Dualshield Pvt.Ltd.",
+"Elegant Nutra Private Limited",
+"END2END Nutrition Pvt. Ltd.",
+"Fermentis Life Science Pvt Ltd",
+"FRISKA NUTRACEUTICALS PVT. LTD.",
+"GAAEAWELLBEING PRIVATE LIMITED",
+"GALLBERRY LIFE SCIENCES PRIVATE LIMITED",
+"GAP Sports",
+"GHEPAN FOODS PRIVATE LIMITED",
+"Gianna Agro Private Limited",
+"GRAINBITE FOODS PRIVATE LIMITED",
+"GRT NUTRITION",
+"GUARDIAN HEALTHCARE SERVICES PRIVATE LIMITED",
+"GWELLTH FOODS AND BEVERAGES PRIVATE LIMITED",
+"HEALTH HAWK NUTRITION",
+"HEMBROS FOODS LLP",
+"HERCULES HEALTH CARES PVT LTD",
+"Himanshu International",
+"HOLISTIC NUTRITION",
+"INSTANT REMEDIES PVT LTD",
+"IRON ASTLUM",
+"JOVEX INTERNATIONAL",
+"Karriers Transport",
+"Last 3 Feet Marketing Solutions Pvt Ltd",
+"LEREL HEALTH FOODS LLP",
+"MAXNOVA HEALTHCARE",
+"Medpro Biotech",
+"MEXICO LABORATORIES CO.",
+"MIND BODY",
+"Monstabolic Nutrition Private Limited",
+"Monte Orleans Incorporation",
+"MOSAIC WELLNESS PVT LTD",
+"MOTHERSENSE TECHNOLOGIES PRIVATE LIMITED",
+"MPG BRANDS PRIVATE LIMITED",
+"M/s Agnihotri S International",
+"M/S DEVPRIYA PAPERS PVT. LTD.",
+"M/s G.S. Pharmbutor Private Limited",
+"M/S NUTRI WORLD",
+"M/s Protein Basket",
+"M/S. Siniki Seasoning",
+"Mtj Grooming and Wellness Pvt. Ltd. (Bengaluru)",
+"MUSCLE DOMINATOR PVT LTD",
+"Musclemantra Ventures Private Limited",
+"Muscle Store",
+"MuscleUp-The Nutrition House",
+"M V IMPEX",
+"NANGLAMAL SUGAR COMPLEX",
+"Natcon Biosciences Private Limited",
+"NEORIGINS PVT LTD",
+"N.G. Electro Products Pvt. Ltd",
+"NIARA HEALTHCARE PVT LTD",
+"Numix Industries Private Limited",
+"NUTASTE FOOD AND DRINK LABS PVT LTD",
+"NUTRIWELL LABORATORIES",
+"NUTROSERVE CARE INDIA PRIVATE LIMITED",
+"Om Plastic Industries",
+"ORIGIN NUTRITION PRIVATE LIMITED",
+"PACKRIGHTS TOTAL SOLUTION PVT LTD",
+"PHARMAKON HEALTH AND BEAUTY PVT LTD",
+"PHINATURALS NUTRITIONS INDIA PRIVATE LIMITED",
+"PONTIKA AEROTECH LIMITED",
+"PRAVEK KALP PRIVATE LIMITED",
+"PURE SOURCE NUTRITION PVT .LTD",
+"Quirky Beverages Private Limited",
+"RAK FITNESS CONSUMER PRIVATE LIMITED",
+"RMS HEALTHCARE",
+"SACRED BEAST LLP",
+"SAINAV HEALTHCARE",
+"SAPIENS LABS",
+"SHREEJI GRAPHICS",
+"Sirona Hygiene Private Limited Hr",
+"Soufflet Malt Alwar Pvt Ltd.",
+"Sport Labs Nutrition",
+"Sproutlife Foods Private Limited",
+"S.S Labels",
+"SUMATI PLASTIC PRIVATE LIMITED",
+"SWASTHUM WELLNESS PVT LTD",
+"Tactus Nutrasciences LLP",
+"Tanvi Fitness Pvt Ltd.(Maharastra)",
+"TRUSAN PRINTPACK PRIVATE LIMITED",
+"UMESH BAN RANA",
+"Unived Healthcare Products Pvt. Ltd.",
+"V Health Care Nutrition",
+"VRS FOODS LIMITED UNIT III"
 ])
 selected_company = st.selectbox("Select Company", company_list + ["Other"])
 company = st.text_input("Enter Company Name") if selected_company == "Other" else selected_company
+
 
 # ------------------ Multiple Product Entries ------------------
 st.subheader(" Add Products")
@@ -153,6 +259,25 @@ for i in range(num_products):
         "Quantity": quantity,
         "Rate": rate
     })
+#Vendor Names
+vendor_list=sorted(["Wonderpac",
+"Bdot",
+"Synergia",
+"Spectal", 
+"Holosafe",
+"Hora art",
+"Swiss",
+"Shyam Flexi",
+"Canpack",
+"Start Pack",
+"Zoom Prints"
+])
+
+selected_vendor= st.selectbox("Select Vendor", vendor_list + ["Other"])
+vendor= st.text_input("Enter Vendor Names") if selected_vendor=="Other" else selected_vendor
+
+#PO NO.
+po_number = st.text_area("PO NO.")
 
 # Shared fields
 shipping_address = st.text_area("Shipping Address")
@@ -203,7 +328,7 @@ if st.button("📤 Submit Order"):
                 product["Rate"],
                 shipping_address,
                 billing_address,
-                delivery_mode
+                delivery_mode,po_number,vendor
             ])
 
         st.success("✅ All products submitted and saved to Google Sheets successfully!")
