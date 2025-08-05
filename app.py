@@ -259,22 +259,40 @@ for i in range(num_products):
         "Quantity": quantity,
         "Rate": rate
     })
-#Vendor Names
-vendor_list=sorted(["Wonderpac",
-"Bdot",
-"Synergia",
-"Spectal", 
-"Holosafe",
-"Hora art",
-"Swiss",
-"Shyam Flexi",
-"Canpack",
-"Start Pack",
-"Zoom Prints"
+import streamlit as st
+
+vendor_list = sorted([
+    "Wonderpac",
+    "Bdot",
+    "Synergia",
+    "Spectal", 
+    "Holosafe",
+    "Hora art",
+    "Swiss",
+    "Shyam Flexi",
+    "Canpack",
+    "Start Pack",
+    "Zoom Prints"
 ])
 
-selected_vendor= st.selectbox("Select Vendor", vendor_list + ["Other"])
-vendor= st.text_input("Enter Vendor Names") if selected_vendor=="Other" else selected_vendor
+# Step 1: Add a blank option at the top
+options = [""] + vendor_list + ["Other"]
+selected_vendor = st.selectbox("Select Vendor", options)
+
+# Step 2: Show text input if 'Other' is selected
+custom_vendor = ""
+if selected_vendor == "Other":
+    custom_vendor = st.text_input("Enter Vendor Name")
+
+# Step 3: Final vendor logic (blank by default)
+if selected_vendor == "Other":
+    vendor = custom_vendor.strip()
+else:
+    vendor = selected_vendor.strip()
+
+# Just to show the selected or entered vendor
+st.write("Final Vendor:", vendor if vendor else "Blank")
+
 
 #PO NO.
 po_number = st.text_area("PO NO.")
