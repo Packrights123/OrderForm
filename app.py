@@ -213,7 +213,7 @@ for i in range(num_products):
     elif product_type == "Laminates":
         col1, col2, col3 = st.columns(3)
         with col1:
-            film_type = st.selectbox(f"Film Type {i+1}", ["12 BOPP", "18 Matte BOPP"], key=f"film_{i}")
+            film_type = st.selectbox(f"Film Type {i+1}", ["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
             barrier_layer = st.selectbox(f"Barrier {i+1}", ["9 ALU", "12 METPET", "12 PET", "12 METPET/9 ALU","12 PET/9 ALU"], key=f"barrier_{i}")
         with col3:
@@ -223,7 +223,7 @@ for i in range(num_products):
     elif product_type == "3SS Pouch":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet","18 Matt BOPP"], key=f"film_{i}")
+            film_type=st.selectbox("Thickness",["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
             barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
@@ -247,7 +247,7 @@ for i in range(num_products):
     elif product_type == "3D Pouch":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet","18 Matt BOPP"], key=f"film_{i}")
+            film_type=st.selectbox("Thickness",["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
             barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
@@ -259,7 +259,7 @@ for i in range(num_products):
     elif product_type=="Standup Pouch":
         col1,col2,col3,col4=st.columns(4)
         with col1:
-            film_type=st.selectbox("Thickness",["12 Pet", "18 Matt BOPP"], key=f"film_{i}")
+            film_type=st.selectbox("Thickness",["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
             barrier_layer=st.selectbox("Barrier Layer", ["12 Metpet","9 ALU"], key=f"barrier_{i}")
         with col3:
@@ -400,6 +400,7 @@ if st.button("📤 Submit Order"):
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
+
 
 
    
