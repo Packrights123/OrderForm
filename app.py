@@ -225,7 +225,7 @@ for i in range(num_products):
         with col1:
             film_type=st.selectbox("Thickness",["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
+            barrier_layer=st.selectbox("Barrier Layer",["9 ALU", "12 METPET", "12 PET", "12 METPET/9 ALU","12 PET/9 ALU"], key=f"barrier_{i}")
         with col3:
             inner_layer=st.selectbox("Inner Layer",["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
@@ -249,7 +249,7 @@ for i in range(num_products):
         with col1:
             film_type=st.selectbox("Thickness",["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer",["12 Metpet","9 ALU"], key=f"barrier_{i}")
+            barrier_layer=st.selectbox("Barrier Layer",["9 ALU", "12 METPET", "12 PET", "12 METPET/9 ALU","12 PET/9 ALU"], key=f"barrier_{i}")
         with col3:
             inner_layer=st.selectbox("Inner Layer",["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
@@ -261,7 +261,7 @@ for i in range(num_products):
         with col1:
             film_type=st.selectbox("Thickness",["12 Pet","18 Matte BOPP","18 BOPP","12 BOPP"], key=f"film_{i}")
         with col2:
-            barrier_layer=st.selectbox("Barrier Layer", ["12 Metpet","9 ALU"], key=f"barrier_{i}")
+            barrier_layer=st.selectbox("Barrier Layer", ["9 ALU", "12 METPET", "12 PET", "12 METPET/9 ALU","12 PET/9 ALU"], key=f"barrier_{i}")
         with col3:
             inner_layer=st.selectbox("Inner Layer", ["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
