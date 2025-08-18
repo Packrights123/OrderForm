@@ -207,7 +207,7 @@ for i in range(num_products):
         with col1:
             item_name = st.selectbox(f"Item Name {i+1}", ["PP White", "PP Silver", "PP Clear", "Chromo Adhesive", "PE White", "Paper Silver", "Clear PET"], key=f"item_{i}")
         with col2:
-            finish = st.selectbox(f"Finish {i+1}", ["Gloss Varnish", "Matt Varnish", "Gloss Lamination", "Matt Lamination", "Matt Lamination + Spot UV"], key=f"finish_{i}")
+            finish = st.selectbox(f"Finish {i+1}", ["Gloss Varnish", "Matt Varnish", "Gloss Lamination", "Matt Lamination", "Matt Lamination + Spot UV","Gloss Lamination+SpotUV"], key=f"finish_{i}")
         specs = f"{item_name} - {finish}"
 
     elif product_type == "Laminates":
@@ -229,7 +229,7 @@ for i in range(num_products):
         with col3:
             inner_layer=st.selectbox("Inner Layer",["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
-            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
+            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish","Matt Lamination + Spot UV","Gloss Lamination+SpotUV",""], key=f"finish_{i}")
         specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
 
     elif product_type == "Neck Shrink":
@@ -253,7 +253,7 @@ for i in range(num_products):
         with col3:
             inner_layer=st.selectbox("Inner Layer",["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
-            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
+            finish_type=st.selectbox("Finish",["Gloss Finish","Matte Finish","Matt Lamination + Spot UV","Gloss Lamination+SpotUV",""], key=f"finish_{i}")
         specs= f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
 
     elif product_type=="Standup Pouch":
@@ -265,14 +265,14 @@ for i in range(num_products):
         with col3:
             inner_layer=st.selectbox("Inner Layer", ["50 LD","90 Poly","60 LD","75 LD","80 LD","100 LD","110 LD","120 LD","140 LD"], key=f"inner_{i}")
         with col4:
-            finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish",""], key=f"finish_{i}")
+            finish_type=st.selectbox("Finish", ["Gloss Finish","Matte Finish","Matt Lamination + Spot UV","Gloss Lamination+SpotUV",""], key=f"finish_{i}")
         specs=f"{film_type} + {barrier_layer} + {inner_layer} + {finish_type}"
     elif product_type=="Mono Carton":
         col1,col2,col3=st.columns(3)
         with col1:
             first_layer=st.selectbox("First Layer",["SBS 350", "SBS 300","330 FBB"], key=f"outer_{i}")
         with col2:
-            second_layer=st.selectbox("Second Layer",["Matte Lamination", "Gloss Lamination"],key=f"second_{i}")
+            second_layer=st.selectbox("Second Layer",["Matte Lamination", "Gloss Lamination","Matt Lamination + Spot UV","Gloss Lamination+SpotUV"],key=f"second_{i}")
         with col3:
             third_layer=st.selectbox("Third Layer",["Emboissing", "Emboissing + SpotUV", "Emboissing + SpotUV + Dripoff","Emboissing + SpotUV + Dripoff + Foiling","" ],key=f"third_{i}")
         spec=f"{first_layer} + {second_layer} + {third_layer}"
@@ -280,7 +280,7 @@ for i in range(num_products):
     elif product_type=="Composite Can":
         col1,col2,col3,col4 =st.columns(4)
         with col1:
-            decoration=st.selectbox("Decoration",["Gloss Lamination", "Gloss lamination+ foiling ","Matte lamination","Matte lamination+ foiling", "Matte lamination + foiling + spotUV"],key=f"decoration_{i}")
+            decoration=st.selectbox("Decoration",["Gloss Lamination", "Gloss lamination+ foiling ","Gloss lamination+ foiling+SpotUV ","Matte lamination","Matte lamination+ foiling", "Matte lamination + foiling + spotUV"],key=f"decoration_{i}")
         with col2:
             cap_type=st.selectbox("Cap Type",["Long Cap", "Short Cap"],key=f"cap_{i}")
         with col3:
