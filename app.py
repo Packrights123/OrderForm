@@ -348,39 +348,34 @@ billing_address = st.text_area("Billing Address")
 delivery_mode = st.text_input("Delivery Mode (e.g., Courier, Transport)")
 
 # ------------------ Submit Order ------------------
+# ------------------ Submit Order ------------------
 if st.button("📤 Submit Order"):
     try:
-        # <<< CHANGE START: This entire block is new. It replaces your old connection code.
-        # This code connects to Google Sheets using the secrets you configured.
-        scopes = ["https://spreadsheets.google.com/feeds", 'https://www.googleapis.com/auth/spreadsheets', "https://www.googleapis.com/auth/drive"]
+        scopes = [
+            "https://spreadsheets.google.com/feeds",
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive"
+        ]
 
-        # Check for secrets in Streamlit Cloud deployment
+        # Load credentials
         if "gcp_service_account" in st.secrets:
             creds_json = st.secrets["gcp_service_account"]
-        # Check for secrets in GitHub Actions deployment
         elif "GCP_CREDENTIALS" in os.environ:
-            creds_json_str = os.environ["GCP_CREDENTIALS"]
-            creds_json = json.loads(creds_json_str)
-        # Fallback for local development
+            creds_json = json.loads(os.environ["GCP_CREDENTIALS"])
         else:
-            try:
-                # Use a specific filename for clarity
-                creds_json = "google_service_account.json"
-            except FileNotFoundError:
-                st.error("Credentials file not found and secrets are not available.")
-                st.stop()
+            with open("google_service_account.json") as f:
+                creds_json = json.load(f)
 
         creds = Credentials.from_service_account_info(creds_json, scopes=scopes)
         client = gspread.authorize(creds)
-        # <<< CHANGE END
 
-        
+        # ✅ Open two different Google Sheets (two files)
+        order_sheet = client.open("ORDER FORM").sheet1              # 1st file
+        master_sheet = client.open("MASTER LOG SHEET").sheet1       # 2nd file
 
-        # ✅ Save to Google Sheets
-        
-        sheet = client.open("ORDER FORM").sheet1  # Change to your Google Sheet name
+        # ✅ Save to both
         for product in products:
-            sheet.append_row([
+            row_data = [
                 datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 salesperson_name,
                 company,
@@ -391,12 +386,14 @@ if st.button("📤 Submit Order"):
                 product["Rate"],
                 shipping_address,
                 billing_address,
-                delivery_mode,po_number,vendor
-            ])
+                delivery_mode,
+                po_number,
+                vendor
+            ]
+            order_sheet.append_row(row_data)
+            master_sheet.append_row(row_data)
 
-        st.success("✅ All products submitted and saved to Google Sheets successfully!")
-
-
+        st.success("✅ All products submitted and saved to BOTH Google Sheet files successfully!")
 
     except Exception as e:
         st.error(f"❌ Error: {e}")
