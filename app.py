@@ -205,7 +205,7 @@ for i in range(num_products):
     if product_type == "Labels":
         col1, col2 = st.columns(2)
         with col1:
-            item_name = st.selectbox(f"Item Name {i+1}", ["PP White", "PP Silver", "PP Clear", "Chromo Adhesive", "PE White", "Paper Silver", "Clear PET"], key=f"item_{i}")
+            item_name = st.selectbox(f"Item Name {i+1}", ["PP White", "PP Silver", "PP Clear", "Chromo Adhesive", "PE White", "Paper Silver", "Clear PET","PE 85"], key=f"item_{i}")
         with col2:
             finish = st.selectbox(f"Finish {i+1}", ["Gloss Varnish", "Matt Varnish", "Gloss Lamination", "Matt Lamination", "Matt Lamination + Spot UV","Gloss Lamination+SpotUV"], key=f"finish_{i}")
         specs = f"{item_name} - {finish}"
