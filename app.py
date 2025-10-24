@@ -181,7 +181,8 @@ company_list = sorted([
 "Unived Healthcare Products Pvt. Ltd.",
 "V Health Care Nutrition",
 "VRS FOODS LIMITED UNIT III",
-" Godara Nutrition Hub"
+"Godara Nutrition Hub",
+"Bright Life Care Pvt Ltd"
 ])
 selected_company = st.selectbox("Select Company", company_list + ["Other"])
 company = st.text_input("Enter Company Name") if selected_company == "Other" else selected_company
