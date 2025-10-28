@@ -208,7 +208,7 @@ for i in range(num_products):
         with col1:
             item_name = st.selectbox(f"Item Name {i+1}", ["PP White", "PP Silver", "PP Clear", "Chromo Adhesive", "PE White", "Paper Silver", "Clear PET","PE85 white","PE85 clear"], key=f"item_{i}")
         with col2:
-            finish = st.selectbox(f"Finish {i+1}", ["Gloss Varnish", "Matt Varnish", "Gloss Lamination", "Matt Lamination", "Matt Lamination + Spot UV","Gloss Lamination+SpotUV","Gloss Varnish+SpotUV","Matt Varnish+SpotUV"], key=f"finish_{i}")
+            finish = st.selectbox(f"Finish {i+1}", ["Gloss Varnish", "Matt Varnish", "Gloss Lamination", "Matt Lamination", "Matt Lamination + Spot UV","Gloss Lamination+SpotUV","Gloss Varnish+SpotUV","Matt Varnish+SpotUV","Velvet Lamination","Velvet Lamination+SpotUV"], key=f"finish_{i}")
         specs = f"{item_name} - {finish}"
 
     elif product_type == "Laminates":
@@ -318,7 +318,9 @@ vendor_list = sorted([
     "Shyam Flexi",
     "Canpack",
     "Start Pack",
-    "Zoom Prints"
+    "Zoom Prints",
+    "Shivika Multilayer",
+    "RA Industries"
 ])
 
 # Step 1: Add a blank option at the top
